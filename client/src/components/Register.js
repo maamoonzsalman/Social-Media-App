@@ -1,39 +1,34 @@
 import React, {useEffect, useState} from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 
 function App() {
-  const [backendData, setBackendData] = useState([{}]) 
-  const [formData, setFormData] = useState({
-    username: '',
-    password: '',
-    email: '',
-    firstName: '',
-    lastName: ''
-  })
+  
+    const [message, setMessage] = useState('')
+    const [formData, setFormData] = useState({
+        username: '',
+        password: '',
+        email: '',
+        firstName: '',
+        lastName: ''
+    })
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchBackend = async () => {
-      try {
-        const response = await axios.get("http://localhost:4000/api", { withCredentials: true });
-        setBackendData(response.data)
-        console.log(response.data)
-      } catch (error) {
-        console.error('Error fetching backend', error);
-      }
-    };
+  const handleRegister = async (e) => {
+    e.preventDefault();
 
-    fetchBackend();
-  }, []);
-
-  const handleRegister = async () => {
     try {
         const response = await axios.post('http://localhost:4000/api/users', { withCredentials: true, formData });
+        setMessage(response.data.message)
+        navigate(response.data.redirectTo)
     } catch (error) {
+        setMessage('Error registering user')
         console.error('Error registering user')
     }
   }
   
   return (
+    <div>
     <form onSubmit={handleRegister}>
         
         <label>Username</label>
@@ -91,7 +86,12 @@ function App() {
         </input>
 
         <button type="submit" required>Register</button>
+
+        <Link to='/login'><button>Already have an account? Click here to login.</button></Link>
     </form>
+            {message && <p style={{ color: 'red' }}>{message}</p>}
+    </div>
+
   );
 }
 

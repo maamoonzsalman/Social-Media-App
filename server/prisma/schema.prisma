@@ -14,59 +14,63 @@ datasource db {
 }
 
 model User {
-  id          Int       @id @default(autoincrement())
-  createdAt   DateTime  @default(now())
-  username    String    @unique
-  email       String    @unique
-  firstname   String 
-  lastname    String
-  password    String
-  posts       Post[]
-  comments    Comment[]
-  likes       Like[]
-  profilePic  String    @default("https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y")
-  bio         String?
-  following   Follows[] @relation("following")
-  followers   Follows[] @relation("followers")
+  id         Int       @id @default(autoincrement())
+  createdAt  DateTime  @default(now())
+  username   String    @unique
+  email      String    @unique
+  firstName  String
+  lastName   String
+  password   String
+  posts      Post[]
+  comments   Comment[]
+  likes      Like[]
+  profilePic String    @default("https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y")
+  bio        String?
+  following  Follows[] @relation("following")
+  followers  Follows[] @relation("followers")
 }
 
 model Post {
-  id          Int       @id @default(autoincrement())
-  image       String
-  createdAt   DateTime  @default(now())
-  caption     String?
-  user        User      @relation(fields: [userId], references: [id])
-  userId      Int
-  comments    Comment[] 
-  likes       Like[]
+  id        Int       @id @default(autoincrement())
+  image     String
+  createdAt DateTime  @default(now())
+  caption   String?
+  user      User      @relation(fields: [userId], references: [id])
+  userId    Int
+  comments  Comment[]
+  likes     Like[]
 }
 
 model Comment {
-  id          Int       @id @default(autoincrement())
-  text        String
-  createdAt   DateTime  @default(now())    
-  user        User      @relation(fields: [userId], references: [id])
-  userId      Int
-  post        Post      @relation(fields: [postId], references: [id])      
-  postId      Int
+  id        Int      @id @default(autoincrement())
+  text      String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  post      Post     @relation(fields: [postId], references: [id])
+  postId    Int
 }
 
 model Like {
-  id          Int       @id @default(autoincrement())
-  createdAt   DateTime  @default(now())
-  post        Post      @relation(fields: [postId], references: [id])
-  postId      Int
-  user        User      @relation(fields: [userId], references: [id])
-  userId      Int
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  post      Post     @relation(fields: [postId], references: [id])
+  postId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+
   @@unique([userId, postId])
 }
 
 model Follows {
-  id            Int    @id @default(autoincrement())
-  followerId    Int
-  follower      User   @relation("following", fields: [followerId], references: [id])
-  followingId   Int
-  following     User   @relation("followers", fields: [followingId], references: [id])
-  createdAt     DateTime @default(now())
+  id          Int      @id @default(autoincrement())
+  followerId  Int
+  follower    User     @relation("following", fields: [followerId], references: [id])
+  followingId Int
+  following   User     @relation("followers", fields: [followingId], references: [id])
+  createdAt   DateTime @default(now())
+
   @@unique([followerId, followingId])
 }
+
+
