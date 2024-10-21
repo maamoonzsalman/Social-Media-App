@@ -1,8 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
+import '../styles/Register.css'
+import 'boxicons'
 
-function App() {
+function Register() {
   
     const [message, setMessage] = useState('')
     const [formData, setFormData] = useState({
@@ -28,71 +30,86 @@ function App() {
   }
   
   return (
+
     <div>
-    <form onSubmit={handleRegister}>
+    <form onSubmit={handleRegister} className="page">
         
-        <label>Username</label>
-        <input
-        type="text"
-        required
-        value = {formData.username}
-        onChange={(e) => setFormData((prevFormData) => ({
-            ...prevFormData,
-            username: e.target.value
-        }))}>
-        </input>
-        
-        <label>Password</label>
-        <input 
-        type="password" 
-        required
-        value = {formData.password}
-        onChange={(e) => setFormData((prevFormData) => ({
-            ...prevFormData,
-            password: e.target.value
-        }))}>
-        
-        </input>
-
-        <label>Email</label>
-        <input 
-        type="email" 
-        required
-        onChange={(e) => setFormData((prevFormData) => ({
-            ...prevFormData,
-            email: e.target.value
-        }))}>
-        </input>
-
-        <label>First Name</label>
-        <input 
-        type="text" 
-        required
-        onChange={(e) => setFormData((prevFormData) => ({
-            ...prevFormData,
-            firstName: e.target.value
-        }))}>
-
-        </input>
-
-        <label>Last Name</label>
-        <input 
-        type="text" 
-        required
-        onChange={(e) => setFormData((prevFormData) => ({
-            ...prevFormData,
-            lastName: e.target.value
-        }))}>
-        </input>
-
-        <button type="submit" required>Register</button>
-
-        <Link to='/login'><button>Already have an account? Click here to login.</button></Link>
-    </form>
+        <div className='register-form'>
+            <div className="field-container">
+                <label className='username label'>Username</label>
+                <input className='username input'
+                type='text'
+                required
+                value = {formData.username}
+                onChange={(e) => setFormData((prevFormData) => ({
+                    ...prevFormData,
+                    username: e.target.value
+                }))}>
+                </input>
+            </div>
+                
+            <div className="field-container">
+                <label className='password label'>Password</label>
+                <input className='password input'
+                type="password" 
+                required
+                value = {formData.password}
+                onChange={(e) => setFormData((prevFormData) => ({
+                    ...prevFormData,
+                    password: e.target.value
+                }))}>
+                </input>
+            </div>
+            
+            <div className="field-container">
+                <label className='email label'>Email</label>
+                <input className='email input'
+                type="email" 
+                required
+                onChange={(e) => setFormData((prevFormData) => ({
+                    ...prevFormData,
+                    email: e.target.value
+                }))}>
+                </input>
+            </div>
+            
+            <div className="field-container">
+                <label className='firstname label'>First Name</label>
+                <input className='firstname input'
+                type="text" 
+                required
+                onChange={(e) => setFormData((prevFormData) => ({
+                    ...prevFormData,
+                    firstName: e.target.value
+                }))}>      
+                </input>
+            </div>
+            
+            <div className="field-container">
+                <label className='lastname label'>Last Name</label>
+                <input className='lastname input'
+                type="text" 
+                required
+                onChange={(e) => setFormData((prevFormData) => ({
+                    ...prevFormData,
+                    lastName: e.target.value
+                }))}>
+                </input>
+            </div>
+            
+            <div className="field-container">
+                <button className='register button' type="submit" required>Register</button>
+            </div>
+            
+            <div className="field-container">
+                <Link to='/login' className="login button"><button>Already have an account? Click here to login.</button></Link>
+            </div>
             {message && <p style={{ color: 'red' }}>{message}</p>}
+        </div>
+    </form>
     </div>
 
   );
 }
 
-export default App;
+export default Register;

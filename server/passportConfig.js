@@ -5,23 +5,21 @@ const prisma = require('./prisma/prismaClient');
 
 passport.use(new LocalStrategy(
     {
-      usernameField: 'email', 
+      usernameField: 'username', // This can be 'email' if you're using email to log in
       passwordField: 'password'
     },
-    async (email, password, done) => {
+    async (username, password, done) => {
       try {
-        // Find the user
-        const user = await prisma.user.findUnique({ where: { email: email.toLowerCase() } });
-        
-        // If no user is found, return an error
+        // Find the user by their username
+        const user = await prisma.user.findUnique({ where: { username: username } });
+  
         if (!user) {
-          return done(null, false, { message: 'Incorrect email.' });
+          return done(null, false, { message: 'Incorrect username.' });
         }
   
         // Compare the provided password with the hashed password in the database
         const isMatch = await bcrypt.compare(password, user.password);
   
-        // If the password does not match, return an error 
         if (!isMatch) {
           return done(null, false, { message: 'Incorrect password.' });
         }
@@ -29,7 +27,6 @@ passport.use(new LocalStrategy(
         // If the password matches, return the user
         return done(null, user);
       } catch (err) {
-        // Handle any errors
         return done(err);
       }
     }

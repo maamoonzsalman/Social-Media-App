@@ -1,6 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; // Import Routes instead of Switch
+import './styles/App.css'
 import Register from './components/Register'
+import Login from './components/Login'
 
 
 function App() {
@@ -9,6 +11,7 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/register" element={<Register />} />
+          <Route path='/login' element ={<Login />} />
         </Routes>
       </div>
     </Router>

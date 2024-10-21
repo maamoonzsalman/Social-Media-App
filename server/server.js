@@ -56,4 +56,7 @@ app.use('/api/followers', followersRouter)
 const followingRouter = require('./routes/following')
 app.use('/api/following', followingRouter)
 
+const authorizationRouter = require('./routes/authorization')
+app.use('/api/authorization', authorizationRouter)
+
 app.listen(4000, () => {console.log('Server started on port 4000')})
