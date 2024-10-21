@@ -1,7 +1,6 @@
 const express = require('express');
 const cors = require('cors');
 const session = require('express-session');
-const prisma = require('./prisma/prismaClient');
 const app = express();
 const passport = require('./passportConfig');
 
@@ -34,8 +33,6 @@ app.use(
 app.get('/api', (req, res) => {
     res.json('hello')
 })
-
-
 
 app.use(passport.initialize());
 app.use(passport.session());
