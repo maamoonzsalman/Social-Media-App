@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; // Im
 import './styles/App.css'
 import Register from './components/Register'
 import Login from './components/Login'
+import Sidebar from './components/Sidebar';
 
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
         <Routes>
           <Route path="/register" element={<Register />} />
           <Route path='/login' element ={<Login />} />
+          <Route path='/' element ={<Sidebar />} />
         </Routes>
       </div>
     </Router>

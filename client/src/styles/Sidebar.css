@@ -1,0 +1,55 @@
+.sidebar-container {
+    background-color: black;
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    height: 100vh;
+    width: 17vw;
+    min-width: 180px;
+    max-width: 300px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.sidebar-items {
+    height: 100vh;
+    margin-top: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.sidebar-welcome {
+    color: white;
+    font-size: 28px;
+    text-align: center;
+}
+
+.sidebar-list {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 15%;
+}
+
+.sidebar-link {
+    text-decoration: none;
+    color: white;
+    display: flex;
+    margin-top: 60%;
+}
+
+.sidebar-link:hover {
+    color: skyblue;
+}
+
+.sidebar-item {
+    margin-right: 10%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+

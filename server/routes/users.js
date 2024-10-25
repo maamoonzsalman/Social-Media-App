@@ -7,6 +7,20 @@ usersRouter.get('/', async (req, res) => {
     res.json('users')
 });
 
+usersRouter.get('/currentuser', async (req, res) => {
+    try {
+        if (req.isAuthenticated()) {
+            res.json({username: req.user.username})
+        } else {
+            res.status(401).json({message: 'Not authenticated'});
+        }
+    } catch (error) {
+        console.log('this is backend error')
+        console.log(error)
+    }   
+        
+});
+
 usersRouter.post('/', async (req, res) => {
     const { username, password, email, firstName, lastName } = req.body.formData
 

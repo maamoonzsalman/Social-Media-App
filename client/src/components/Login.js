@@ -19,8 +19,10 @@ function Login() {
                 password: formData.password
             }, { withCredentials: true });  // Use `withCredentials` for cookies/session support
             navigate(response.data.redirectTo)
+            setMessage(response.data.message)
         } catch (error) {
             console.log(error);
+            setMessage(error.response?.data?.message || 'Login failed')
         }
     };
 
