@@ -32,8 +32,9 @@ function Login() {
             <form className='page' onSubmit={handleLogin}>
                 <div className='login-form'>
                     <div className="field-container">
-                        <label>Username</label>
+                        <label className='label'>Username</label>
                         <input
+                        className='input'
                         required
                         type='text'
                         value = {formData.email}
@@ -45,8 +46,9 @@ function Login() {
                     </div>
                 
                     <div className="field-container">
-                        <label>Password</label>
+                        <label className='label'>Password</label>
                         <input
+                        className='input'
                         required
                         type='password'
                         value={formData.password}
@@ -62,7 +64,7 @@ function Login() {
                     </div>
                 
                     <div className="field-container">
-                        <Link to='/register' className="login button"><button>New? Click here to create an account.</button></Link>
+                        <Link to='/register' className="login"><button className='button'>New? Click here to create an account.</button></Link>
                     </div>
                     {message && <p style={{ color: 'red' }}>{message}</p>}
                 </div>

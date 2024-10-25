@@ -32,7 +32,7 @@
     margin: 10px;
 }
 
-label {
+.label {
     margin-bottom: 5px;
     font-family: Arial, Helvetica, sans-serif;
     font-weight: 600;
@@ -41,7 +41,7 @@ label {
     font-size: 20px;
 }
 
-input {
+.input {
     width: 100%;
     border-radius: 5px;
     background-color: #333;
@@ -50,7 +50,7 @@ input {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-input:focus {
+.input:focus {
     border-color: black;
     color: white;
     border: none;
@@ -58,15 +58,15 @@ input:focus {
     outline-width: 1px;
 }
 
-input::placeholder {
+.input::placeholder {
     color: #888;
 }
 
-input:hover {
+.input:hover {
     background-color: #666;
 }
 
-button {
+.button {
     border-radius: 5px;
     color: white;
     background-color: #333;
@@ -76,7 +76,7 @@ button {
     padding: 10px;
 }
 
-button:hover {
+.button:hover {
     background-color: #666;
     cursor: pointer;
 }

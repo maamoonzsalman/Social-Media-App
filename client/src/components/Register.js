@@ -102,7 +102,7 @@ function Register() {
             </div>
             
             <div className="field-container">
-                <Link to='/login' className="login button"><button>Already have an account? Click here to login.</button></Link>
+                <Link to='/login' className="login"><button className='button'>Already have an account? Click here to login.</button></Link>
             </div>
             {message && <p style={{ color: 'red' }}>{message}</p>}
         </div>

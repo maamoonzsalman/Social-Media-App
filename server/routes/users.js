@@ -21,6 +21,25 @@ usersRouter.get('/currentuser', async (req, res) => {
         
 });
 
+usersRouter.get('/:username', async (req, res) => {
+    try {
+        const {username} = req.params
+        const userProfile = await prisma.user.findUnique({
+            where: {
+                username: username.toLowerCase()
+            },
+            include: {
+                posts: true,
+                _count: { select: { followers: true, following: true}}
+            }
+        })
+        console.log(userProfile)
+        return res.json({userProfile: userProfile})
+    } catch(error) {
+        console.log('error retrieving user from database', error)
+    }
+})
+
 usersRouter.post('/', async (req, res) => {
     const { username, password, email, firstName, lastName } = req.body.formData
 

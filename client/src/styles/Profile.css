@@ -1,0 +1,80 @@
+.profile-page {
+    display: flex;
+    background-color: black;
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    padding: 6%;
+}
+
+.user-info-container {
+    display: flex;
+    margin-bottom: 100px;
+}
+
+.profile-picture-container {
+    margin-right: 70px;
+}
+
+.profile-picture {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-info-top,
+.user-info-middle,
+.user-info-bottom {
+    display: flex;
+    align-items: center;
+}
+
+.user-info-top {
+    margin-bottom: 25px;
+}
+
+.username {
+    margin-right: 20px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.edit-profile-btn-container {
+    margin-right: 15px;
+}
+
+.edit-profile-btn, .settings-btn {
+    background-color: #696969;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    border-radius: 8px;
+}
+
+.edit-profile-btn:hover, .settings-btn:hover {
+    background-color: #2F4F4F;
+    cursor: pointer;
+}
+
+.user-info-middle {
+    margin-bottom: 25px;
+}
+
+.followers-count:hover, .following-count:hover {
+    cursor: pointer;
+}
+
+.user-metric {
+    margin-right: 20px;
+}
+
