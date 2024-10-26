@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import '../styles/UsersModal.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons'; // Import the "times" icon
@@ -33,15 +33,19 @@ const UsersModal = ({onClose, type, usersArray }) => {
                         return (
                         <div className='modal-user-container' key={profile.id}>
                             <div className='modal-list-left'>
-                                <div className='modal-profile-picture-container'>
-                                    <img className='modal-profile-picture'
-                                    src={profile.profilePic}
-                                    alt={`${profile.username}'s profile`}  
-                                    />
-                                </div>
-                                <div className='modal-user-name'>
-                                    {profile.username}
-                                </div>
+                                <Link to={`/${profile.username}`} onClick={onClose}>
+                                    <div className='modal-profile-picture-container'>
+                                        <img className='modal-profile-picture'
+                                        src={profile.profilePic}
+                                        alt={`${profile.username}'s profile`}  
+                                        />
+                                    </div>
+                                </Link>
+                                <Link to={`/${profile.username}`} onClick={onClose}>
+                                    <div className='modal-user-name'>
+                                       {profile.username}
+                                    </div>
+                                </Link>
                             </div>
                             <div className='modal-list-right'>
                                 {username === loggedInUser.username && (
