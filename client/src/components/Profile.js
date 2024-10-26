@@ -37,7 +37,10 @@ const Profile = () => {
 
     }, [username])
 
-
+    const handleFollow = async () => {
+        const response = await axios.post(`http://localhost:4000/api/followers/addfollow/${profileData.id}/${loggedInUser.id}`)
+        console.log(response.data)
+    }
 
     const openFollowersModal = () => {
         setFollowersModalStatus(true)
@@ -77,7 +80,7 @@ const Profile = () => {
                             <div className='settings-btn-container'><button className='settings-btn'>Settings</button></div>
                             </>
                             ) : (
-                                <div className='follow-btn-container'><button className='follow-btn'>Follow</button></div>
+                                <div className='follow-btn-container'><button className='follow-btn' onClick={handleFollow}>Follow</button></div>
                             )}
                         </div>
                         <div className='user-info-middle'>
@@ -100,11 +103,11 @@ const Profile = () => {
             )}
             
             {followersModalStatus && (
-                <UsersModal onClose={closeFollowersModal} type='Followers'/>
+                <UsersModal onClose={closeFollowersModal} type='Followers' usersArray={profileData.followers}/>
             )}
 
             {followingModalStatus && (
-                <UsersModal onClose={closeFollowingModal} type='Following'/>
+                <UsersModal onClose={closeFollowingModal} type='Following' usersArray={profileData.following}/>
             )}
 
         </div>

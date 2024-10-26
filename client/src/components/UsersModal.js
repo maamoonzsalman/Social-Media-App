@@ -4,22 +4,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons'; // Import the "times" icon
 import { UserContext } from "../contexts/UserContext";
 
-const UsersModal = ({onClose, type }) => {
+const UsersModal = ({onClose, type, usersArray }) => {
 
-    const {currentUser, setCurrentUser} = useContext(UserContext)
-
-    const users = [{username: 'Moon', profilePic: "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"}, 
-                   {username: 'John', profilePic: "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"},
-                   {username: 'John', profilePic: "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"},
-                   {username: 'John', profilePic: "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"},
-                   {username: 'John', profilePic: "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"},
-                   {username: 'John', profilePic: "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"},
-                   {username: 'John', profilePic: "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"},
-                   {username: 'John', profilePic: "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"},
-                   {username: 'John', profilePic: "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"},]
-
-    
-
+    const {loggedInUser, setLoggedInUser} = useContext(UserContext)
         
     return (
         <div className='modal-overlay'>
@@ -37,18 +24,21 @@ const UsersModal = ({onClose, type }) => {
                 <div className='modal-list'>
                     
                     
-                    {users.map((user, index) => (
-                        <div className='modal-user-container' key={index}>
+                    {usersArray.map((user) => {
+                        
+                        const profile = type === 'Followers' ? user.follower : user.following;
+                        
+                        return (
+                        <div className='modal-user-container' key={profile.id}>
                             <div className='modal-list-left'>
                                 <div className='modal-profile-picture-container'>
                                     <img className='modal-profile-picture'
-                                    src={user.profilePic}
-                                    alt={`${user.username}'s profile`}
-                                    
+                                    src={profile.profilePic}
+                                    alt={`${profile.username}'s profile`}  
                                     />
                                 </div>
                                 <div className='modal-user-name'>
-                                    {user.username}
+                                    {profile.username}
                                 </div>
                             </div>
                             <div className='modal-list-right'>
@@ -58,8 +48,8 @@ const UsersModal = ({onClose, type }) => {
                             </div>
                         
                         </div >
-                    ))}    
-
+                        ); 
+                    })}    
 
                 </div>
             </div>
