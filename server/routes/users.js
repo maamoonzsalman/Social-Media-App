@@ -7,20 +7,6 @@ usersRouter.get('/', async (req, res) => {
     res.json('users')
 });
 
-usersRouter.get('/currentuser', async (req, res) => {
-    try {
-        if (req.isAuthenticated()) {
-            res.json({username: req.user.username})
-        } else {
-            res.status(401).json({message: 'Not authenticated'});
-        }
-    } catch (error) {
-        console.log('this is backend error')
-        console.log(error)
-    }   
-        
-});
-
 usersRouter.get('/loggedinuser', async (req, res) => {
     try {
         if (req.isAuthenticated()) {
@@ -117,9 +103,10 @@ usersRouter.post('/', async (req, res) => {
 
         req.login(newUser, function(err) {
             if (err) {
+                console.error('Error logging in after registration:', err);
                 return res.json({ message: 'Error logging in after register'})
             }
-            return res.json({message: 'Login successful', redirectTo: '/', user: newUser})
+            return res.json({message: 'Login successful', redirectTo: '/', userProfile: newUser})
         })
 
     } catch(error) {

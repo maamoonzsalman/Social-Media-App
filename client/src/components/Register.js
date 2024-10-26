@@ -1,6 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
+import { UserContext } from '../contexts/UserContext';
 import '../styles/Register.css'
 import 'boxicons'
 
@@ -15,19 +16,31 @@ function Register() {
         lastName: ''
     })
   const navigate = useNavigate();
+  const { setLoggedInUser } = useContext(UserContext);
 
-  const handleRegister = async (e) => {
-    e.preventDefault();
+   const handleRegister = async (e) => {
+        e.preventDefault();
 
-    try {
-        const response = await axios.post('http://localhost:4000/api/users', { withCredentials: true, formData });
-        setMessage(response.data.message)
-        navigate(response.data.redirectTo)
-    } catch (error) {
-        setMessage('Error registering user')
-        console.error('Error registering user')
-    }
-  }
+        try {
+            const response = await axios.post('http://localhost:4000/api/users', {
+                formData
+            }, { withCredentials: true });
+
+            setMessage(response.data.message);
+
+            // Set the user directly in context after successful registration
+            if (response.data.userProfile) {
+                setLoggedInUser(response.data.userProfile);
+                navigate(response.data.redirectTo);
+            } else {
+                setMessage('Failed to retrieve user data after registration');
+            }
+            
+        } catch (error) {
+            setMessage('Error registering user');
+            console.error('Error registering user:', error);
+        }
+    };
   
   return (
 
