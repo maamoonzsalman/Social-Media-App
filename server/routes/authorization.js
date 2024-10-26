@@ -20,11 +20,14 @@ authorizationRouter.post('/login', (req, res, next) => {
     })(req, res, next);
   });
 
-authorizationRouter.post('/logout', function(req, res, next){
-    req.logout(function(err) {
-      if (err) {return next(err); }
-      console.log('logging user out')
-      return res.status(200).json({message: 'Logout successful', redirectTo: '/login'})
+  authorizationRouter.post('/logout', (req, res) => {
+    req.logout((err) => {
+      if (err) {
+        return res.status(500).json({ message: 'Error logging out' });
+      }
+      req.session.destroy(); // Destroy the session
+      res.clearCookie('connect.sid'); // Clear the session cookie
+      return res.status(200).json({ message: 'Logged out successfully', redirectTo: '/login' });
     });
   });
 

@@ -1,13 +1,16 @@
-import React, {useState, useEffect} from 'react' 
+import React, {useState, useEffect, useContext} from 'react' 
 import { useNavigate,Link } from 'react-router-dom'
 import axios from 'axios'
+import { UserContext } from "../contexts/UserContext";
 import 'boxicons'
 import '../styles/Sidebar.css'
 
 function Sidebar() {
-    const [currentUser, setCurrentUser] = useState('');
+    const {loggedInUser, setLoggedInUser} = useContext(UserContext)
+    console.log('this is loggedin', loggedInUser)
     const navigate = useNavigate();
 
+    /*
     useEffect(() => {
         const fetchCurrentUser = async () => {
             try {
@@ -21,6 +24,7 @@ function Sidebar() {
         fetchCurrentUser();
         
     }, [])
+*/
 
     const handleLogout = async () => {
         try {
@@ -35,12 +39,12 @@ function Sidebar() {
     
     <div className='sidebar-container'>
         <div className='sidebar-items'>
-            <div className='sidebar-welcome'>Welcome to Moonbook, {currentUser}</div>
+            <div className='sidebar-welcome'>Welcome to Moonbook, {loggedInUser.username}</div>
             <div className='sidebar-list'>
                 <Link to='/' className='sidebar-link'><div className='sidebar-item'>Home</div><div><box-icon name='home'  color='white' type='solid'></box-icon></div></Link>           
-                <Link to='/search' className='sidebar-link'><div className='sidebar-item'>Search</div><div><box-icon name='search-alt-2' color='white'></box-icon></div></Link>            
+                <Link to='/users/search' className='sidebar-link'><div className='sidebar-item'>Search</div><div><box-icon name='search-alt-2' color='white'></box-icon></div></Link>            
                 <Link to='/create' className='sidebar-link'><div className='sidebar-item'>Create</div><div><box-icon name='upload' color='white'></box-icon></div></Link>            
-                <Link to={`/${currentUser}`} className='sidebar-link'><div className='sidebar-item'>Profile</div><div><box-icon name='user-account' color='white' type='solid'></box-icon></div></Link>            
+                <Link to={`/${loggedInUser.username}`} className='sidebar-link'><div className='sidebar-item'>Profile</div><div><box-icon name='user-account' color='white' type='solid'></box-icon></div></Link>            
                 <Link className='sidebar-link' onClick={handleLogout}><div className='sidebar-item'>Logout</div><div><box-icon name='log-out-circle' color='white' type='solid'></box-icon></div></Link>                        
             </div>
         </div>

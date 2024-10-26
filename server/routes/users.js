@@ -21,18 +21,57 @@ usersRouter.get('/currentuser', async (req, res) => {
         
 });
 
+usersRouter.get('/loggedinuser', async (req, res) => {
+    try {
+        if (req.isAuthenticated()) {
+            console.log('Authenticated user:', req.user);
+            const username = req.user.username
+            console.log('This is the username of the loggedin user: ', username)
+            const userProfile = await prisma.user.findUnique({
+                where: {
+                    username: username.toLowerCase()
+                }
+            })
+            res.json({userProfile: userProfile})
+        } else {
+            res.status(401).json({message: 'Not authenticated'});
+        }
+    } catch (error) {
+        console.log('Failure authenticating user')
+        console.log(error)
+    }   
+        
+});
+
 usersRouter.get('/:username', async (req, res) => {
     try {
         const {username} = req.params
         const userProfile = await prisma.user.findUnique({
             where: {
-                username: username.toLowerCase()
+                username: username.toLowerCase(), 
             },
             include: {
-                posts: true,
-                _count: { select: { followers: true, following: true}}
-            }
-        })
+                posts: {
+                include: {
+                    comments: true,
+                    likes: true,
+                },
+                },
+                followers: {
+                include: {
+                    follower: true, // Includes follower details for each follower
+                },
+                },
+                following: {
+                include: {
+                    following: true, // Includes following details for each followed user
+                },
+                },
+                comments: true, // Includes all comments made by the user
+                likes: true, // Includes all likes made by the user
+            },
+            });
+
         console.log(userProfile)
         return res.json({userProfile: userProfile})
     } catch(error) {

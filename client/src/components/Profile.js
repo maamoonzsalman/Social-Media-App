@@ -1,13 +1,18 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
 import Link, {useNavigate, useParams} from 'react-router-dom';
 import axios from 'axios';
+import { UserContext } from "../contexts/UserContext";
 import Sidebar from "./Sidebar";
+import UsersModal from "./UsersModal";
 import '../styles/Profile.css'
 
 const Profile = () => {
     
     const [profileData, setProfileData] = useState({})
-    const [currentUser, setCurrentUser] = useState('')
+    const [followersModalStatus, setFollowersModalStatus] = useState(false)
+    const [followingModalStatus, setFollowingModalStatus] = useState(false)
+    const {loggedInUser, setLoggedInUser} = useContext(UserContext)
+
     const {username} = useParams();
 
     useEffect(() => {
@@ -16,6 +21,7 @@ const Profile = () => {
                 const response = await axios.get(`http://localhost:4000/api/users/${username}`, {withCredentials: true})
                 setProfileData(response.data.userProfile)
                 console.log(response.data.userProfile)
+                console.log('this')
             } catch (error) {
                 console.log('Error fetching user profile')
             }
@@ -25,19 +31,23 @@ const Profile = () => {
 
     }, [username])
 
-    useEffect(() => {
-        const fetchCurrentUser = async () => {
-            try {
-                const response = await axios.get('http://localhost:4000/api/users/currentuser', {withCredentials: true})
-                setCurrentUser(response.data.username)
-                console.log(response.data.username)
-            } catch(error) {
-                console.log(error)
-            }
-        };
-        fetchCurrentUser();
-        
-    }, [])
+
+
+    const openFollowersModal = () => {
+        setFollowersModalStatus(true)
+    }
+
+    const closeFollowersModal = () => {
+        setFollowersModalStatus(false)
+    }
+
+    const openFollowingModal = () => {
+        setFollowingModalStatus(true)
+    }
+
+    const closeFollowingModal = () => {
+        setFollowingModalStatus(false)
+    }
 
     return (
         <div className="profile-page">
@@ -59,8 +69,8 @@ const Profile = () => {
                         </div>
                         <div className='user-info-middle'>
                             <div className='user-metric posts-count'>{profileData.posts.length} posts</div>
-                            <div className='user-metric followers-count'>{profileData._count.followers} followers</div>
-                            <div className='user-metric following-count'>{profileData._count.following} following</div>
+                            <div className='user-metric followers-count' onClick={openFollowersModal}>{profileData.followers.length} followers</div>
+                            <div className='user-metric following-count' onClick={openFollowingModal}>{profileData.following.length} following</div>
                         </div>
                         <div className='user-info-botom'>
                             <div className='user-bio'>Bio: {profileData.bio}</div>
@@ -71,6 +81,15 @@ const Profile = () => {
                     Posts
                 </div>
             </div>
+            
+            {followersModalStatus && (
+                <UsersModal onClose={closeFollowersModal} type='Followers'/>
+            )}
+
+            {followingModalStatus && (
+                <UsersModal onClose={closeFollowingModal} type='Following'/>
+            )}
+
         </div>
     )
 }
