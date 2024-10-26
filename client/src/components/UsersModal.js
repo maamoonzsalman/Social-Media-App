@@ -1,4 +1,5 @@
 import React, {useState, useEffect, useContext} from "react";
+import { useParams } from "react-router-dom";
 import '../styles/UsersModal.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons'; // Import the "times" icon
@@ -7,6 +8,7 @@ import { UserContext } from "../contexts/UserContext";
 const UsersModal = ({onClose, type, usersArray }) => {
 
     const {loggedInUser, setLoggedInUser} = useContext(UserContext)
+    const {username} = useParams();
         
     return (
         <div className='modal-overlay'>
@@ -42,9 +44,11 @@ const UsersModal = ({onClose, type, usersArray }) => {
                                 </div>
                             </div>
                             <div className='modal-list-right'>
-                                <div className='modal-remove-btn-container'>
-                                    <button className='modal-remove-btn'>Remove</button>
-                                </div>
+                                {username === loggedInUser.username && (
+                                    <div className='modal-remove-btn-container'>
+                                        <button className='modal-remove-btn'>Remove</button>
+                                    </div>
+                                )}
                             </div>
                         
                         </div >
@@ -56,5 +60,6 @@ const UsersModal = ({onClose, type, usersArray }) => {
         </div>
     )
 }
+
 
 export default UsersModal;
