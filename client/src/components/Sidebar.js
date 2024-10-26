@@ -7,13 +7,11 @@ import '../styles/Sidebar.css'
 
 function Sidebar() {
     const {loggedInUser, setLoggedInUser, fetchLoggedInUser} = useContext(UserContext)
-    console.log('this is loggedin', loggedInUser)
     const navigate = useNavigate();
 
     const handleLogout = async () => {
         try {
-            await axios.post('http://localhost:3000/api/authorization/logout', {withCredentials: true})
-            
+            await axios.post('http://localhost:3000/api/authorization/logout', {withCredentials: true})    
             setLoggedInUser('');
             fetchLoggedInUser();
             navigate('/login')

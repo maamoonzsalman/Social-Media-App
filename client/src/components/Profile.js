@@ -27,8 +27,7 @@ const Profile = () => {
             try {
                 const response = await axios.get(`http://localhost:4000/api/users/${username}`, {withCredentials: true})
                 setProfileData(response.data.userProfile)
-                console.log(response.data.userProfile)
-                console.log('this')
+                console.log(`This is the user's profile: `, response.data.userProfile)
             } catch (error) {
                 console.log('Error fetching user profile')
             }
@@ -72,8 +71,14 @@ const Profile = () => {
                     <div className='user-info'>
                         <div className='user-info-top'>
                             <div className='username'>{username}</div>
+                            {username === loggedInUser.username ? (
+                            <>
                             <div className='edit-profile-btn-container'><button className='edit-profile-btn'>Edit Profile</button></div>
                             <div className='settings-btn-container'><button className='settings-btn'>Settings</button></div>
+                            </>
+                            ) : (
+                                <div className='follow-btn-container'><button className='follow-btn'>Follow</button></div>
+                            )}
                         </div>
                         <div className='user-info-middle'>
                             <div className='user-metric posts-count'>{profileData.posts.length} posts</div>
