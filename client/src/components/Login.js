@@ -1,6 +1,7 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from 'axios';
+import { UserContext } from '../contexts/UserContext';
 import '../styles/Login.css'
 
 function Login() {
@@ -11,6 +12,8 @@ function Login() {
     const [message, setMessage] = useState('')
     const navigate = useNavigate();
 
+    const { fetchLoggedInUser } = useContext(UserContext);
+
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
@@ -18,8 +21,11 @@ function Login() {
                 username: formData.username,   // Send formData directly
                 password: formData.password
             }, { withCredentials: true });  // Use `withCredentials` for cookies/session support
-            navigate(response.data.redirectTo)
+            
+            fetchLoggedInUser();
+            
             setMessage(response.data.message)
+            navigate(response.data.redirectTo)
         } catch (error) {
             console.log(error);
             setMessage(error.response?.data?.message || 'Login failed')
@@ -37,7 +43,7 @@ function Login() {
                         className='input'
                         required
                         type='text'
-                        value = {formData.email}
+                        value = {formData.username}
                         onChange={(e) => setFormData((prevFormData) => ({
                             ...prevFormData,
                             username: e.target.value

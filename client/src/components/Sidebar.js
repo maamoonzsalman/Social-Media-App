@@ -6,30 +6,17 @@ import 'boxicons'
 import '../styles/Sidebar.css'
 
 function Sidebar() {
-    const {loggedInUser, setLoggedInUser} = useContext(UserContext)
+    const {loggedInUser, setLoggedInUser, fetchLoggedInUser} = useContext(UserContext)
     console.log('this is loggedin', loggedInUser)
     const navigate = useNavigate();
 
-    /*
-    useEffect(() => {
-        const fetchCurrentUser = async () => {
-            try {
-                const response = await axios.get('http://localhost:4000/api/users/currentuser', {withCredentials: true})
-                setCurrentUser(response.data.username)
-                console.log(response.data.username)
-            } catch(error) {
-                console.log(error)
-            }
-        };
-        fetchCurrentUser();
-        
-    }, [])
-*/
-
     const handleLogout = async () => {
         try {
-            const response = await axios.post('http://localhost:3000/api/authorization/logout', {withCredentials: true})
-            navigate(response.data.redirectTo)
+            await axios.post('http://localhost:3000/api/authorization/logout', {withCredentials: true})
+            
+            setLoggedInUser('');
+            fetchLoggedInUser();
+            navigate('/login')
         } catch (error) {
             console.log('error logging out')
         }
@@ -38,6 +25,7 @@ function Sidebar() {
     return (
     
     <div className='sidebar-container'>
+        {loggedInUser ? (
         <div className='sidebar-items'>
             <div className='sidebar-welcome'>Welcome to Moonbook, {loggedInUser.username}</div>
             <div className='sidebar-list'>
@@ -48,6 +36,11 @@ function Sidebar() {
                 <Link className='sidebar-link' onClick={handleLogout}><div className='sidebar-item'>Logout</div><div><box-icon name='log-out-circle' color='white' type='solid'></box-icon></div></Link>                        
             </div>
         </div>
+
+        ) : (
+            <div>Fetching user data...</div>
+        )}
+
     </div>     
     
     )

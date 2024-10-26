@@ -27,7 +27,6 @@ const UsersModal = ({onClose, type }) => {
                 <div className='modal-title'>
                     <div className='modal-type'>
                         {type}
-                        {currentUser}
                     </div>
                     <div className='modal-close-btn-container'>
                         <button className='modal-close-btn' onClick={onClose}>

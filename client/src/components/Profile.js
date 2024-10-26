@@ -8,7 +8,14 @@ import '../styles/Profile.css'
 
 const Profile = () => {
     
-    const [profileData, setProfileData] = useState({})
+    const [profileData, setProfileData] = useState({
+        profilePic: '',
+        bio: null,
+        posts: [],
+        followers: [],
+        following: [],
+      })
+
     const [followersModalStatus, setFollowersModalStatus] = useState(false)
     const [followingModalStatus, setFollowingModalStatus] = useState(false)
     const {loggedInUser, setLoggedInUser} = useContext(UserContext)
@@ -52,6 +59,7 @@ const Profile = () => {
     return (
         <div className="profile-page">
             <Sidebar/>
+            {profileData ? (
             <div className="profile-container">
                 <div className='user-info-container'>
                     <div className="profile-picture-container">
@@ -81,6 +89,10 @@ const Profile = () => {
                     Posts
                 </div>
             </div>
+
+            ) : (
+                <div> Fetching Profile Data... </div>
+            )}
             
             {followersModalStatus && (
                 <UsersModal onClose={closeFollowersModal} type='Followers'/>

@@ -1,33 +1,32 @@
 import { createContext, useState, useEffect } from 'react';
-import axios from 'axios'
+import axios from 'axios';
 
 // Create the context
 export const UserContext = createContext();
 
-
-
-// Create the provider component
 export const UserProvider = ({ children }) => {
-  const [loggedInUser, setLoggedInUser] = useState(''); // Default state for the logged in user
+  const [loggedInUser, setLoggedInUser] = useState(''); 
+
+  // Function to fetch the logged-in user
+  const fetchLoggedInUser = async () => {
+    try {
+      const response = await axios.get('http://localhost:4000/api/users/loggedinuser', { withCredentials: true });
+      setLoggedInUser(response.data.userProfile);
+      console.log('Logged in user data: ', response.data.userProfile)
+    } catch (error) {
+      console.log(error);
+      setLoggedInUser(null); // Clear logged-in user if there’s an error
+    }
+  };
 
   useEffect(() => {
-    const fetchLoggedInUser = async () => {
-        try {
-            const response = await axios.get('http://localhost:4000/api/users/loggedinuser', {withCredentials: true})
-            console.log('This is the data of the logged in user: ', response.data.userProfile)
-            console.log('This is the logged in username: ', response.data.userProfile.username)
-            setLoggedInUser(response.data.userProfile)
-        } catch(error) {
-            console.log(error)
-        }
-    };
-    fetchLoggedInUser();
-    
-}, [])
+    fetchLoggedInUser(); // Fetch user on initial load
+  }, []); // Only on component mount
 
   return (
-    <UserContext.Provider value={{ loggedInUser, setLoggedInUser }}>
+    <UserContext.Provider value={{ loggedInUser, setLoggedInUser, fetchLoggedInUser }}>
       {children}
     </UserContext.Provider>
   );
 };
+
