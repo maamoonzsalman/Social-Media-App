@@ -1,14 +1,26 @@
 import React, {useState, useEffect, useContext} from "react";
 import { useParams, Link } from "react-router-dom";
+import axios from "axios";
 import '../styles/UsersModal.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons'; // Import the "times" icon
 import { UserContext } from "../contexts/UserContext";
 
-const UsersModal = ({onClose, type, usersArray }) => {
+const UsersModal = ({onClose, type, usersArray, removeFollow }) => {
 
     const {loggedInUser, setLoggedInUser} = useContext(UserContext)
     const {username} = useParams();
+
+/*   
+    async function removeFollow(followingId, followerId) {
+        try {
+            const response = await axios.delete(`http://localhost:4000/api/follows/removefollow/${followingId}/${followerId}`)
+        } catch (error) {
+            console.log('Error removing follower')
+        }
+
+    }
+*/
         
     return (
         <div className='modal-overlay'>
@@ -50,7 +62,16 @@ const UsersModal = ({onClose, type, usersArray }) => {
                             <div className='modal-list-right'>
                                 {username === loggedInUser.username && (
                                     <div className='modal-remove-btn-container'>
-                                        <button className='modal-remove-btn'>Remove</button>
+                                        <button
+                                         className='modal-remove-btn' 
+                                         onClick={() => 
+                                         type==='Followers'
+                                         ? removeFollow(loggedInUser.id, profile.id)
+                                         : removeFollow(profile.id, loggedInUser.id)
+                                            
+                                         }     
+                                         >Remove
+                                         </button>
                                     </div>
                                 )}
                             </div>

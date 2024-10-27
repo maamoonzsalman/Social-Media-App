@@ -1,16 +1,8 @@
 const express = require('express')
-const followersRouter = express.Router()
+const followsRouter = express.Router()
 const prisma = require('../prisma/prismaClient');
 
-followersRouter.get('/', async (req, res) => {
-    return res.json('followers')
-});
-
-followersRouter.get('/:username/followers', async (req, res) => {
-
-})
-
-followersRouter.post('/addfollow/:followingId/:followerId', async(req, res) => {
+followsRouter.post('/addfollow/:followingId/:followerId', async(req, res) => {
     
     try {
         const followingId = parseInt(req.params.followingId);
@@ -46,4 +38,26 @@ followersRouter.post('/addfollow/:followingId/:followerId', async(req, res) => {
     }
 })
 
-module.exports = followersRouter;
+followsRouter.delete('/removefollow/:followingId/:followerId', async (req, res) => {
+
+    try {
+        const followingId = parseInt(req.params.followingId);
+        const followerId = parseInt(req.params.followerId);
+
+        const unfollow = await prisma.follows.delete({
+            where: {
+                followerId_followingId: {
+                    followerId: followerId,
+                    followingId: followingId
+                }
+            },
+        });
+        console.log('Removal of follow successful: ', unfollow)
+        return res.json(unfollow)
+    } catch (error) {
+        console.log('error removing follow: ', error)
+    }
+
+})
+
+module.exports = followsRouter;

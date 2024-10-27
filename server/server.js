@@ -50,8 +50,8 @@ app.use('/api/posts', postsRouter)
 const commentsRouter = require('./routes/comments')
 app.use('/api/comments', commentsRouter)
 
-const followersRouter = require('./routes/followers')
-app.use('/api/followers', followersRouter)
+const followsRouter = require('./routes/follows')
+app.use('/api/follows', followsRouter)
 
 const followingRouter = require('./routes/following')
 app.use('/api/following', followingRouter)

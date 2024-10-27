@@ -38,8 +38,21 @@ const Profile = () => {
     }, [username])
 
     const handleFollow = async () => {
-        const response = await axios.post(`http://localhost:4000/api/followers/addfollow/${profileData.id}/${loggedInUser.id}`)
-        console.log(response.data)
+        try {
+            const response = await axios.post(`http://localhost:4000/api/follows/addfollow/${profileData.id}/${loggedInUser.id}`)
+        } catch (error) {
+            console.log('error following user: ', error)
+        }
+             
+    }
+
+    const removeFollow = async(followingId, followerId) => {
+        try {
+            const response = await axios.delete(`http://localhost:4000/api/follows/removefollow/${followingId}/${followerId}`)
+        } catch (error) {
+            console.log('Error removing follower')
+        }
+
     }
 
     const openFollowersModal = () => {
@@ -103,11 +116,11 @@ const Profile = () => {
             )}
             
             {followersModalStatus && (
-                <UsersModal onClose={closeFollowersModal} type='Followers' usersArray={profileData.followers}/>
+                <UsersModal onClose={closeFollowersModal} type='Followers' usersArray={profileData.followers} removeFollow={removeFollow}/>
             )}
 
             {followingModalStatus && (
-                <UsersModal onClose={closeFollowingModal} type='Following' usersArray={profileData.following}/>
+                <UsersModal onClose={closeFollowingModal} type='Following' usersArray={profileData.following} removeFollow={removeFollow}/>
             )}
 
         </div>
