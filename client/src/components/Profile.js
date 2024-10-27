@@ -76,7 +76,7 @@ const Profile = () => {
              
     }
 
-    const removeFollow = async(followingId, followerId) => {
+    const handleRemoveFollow = async(followingId, followerId) => {
         try {
             const response = await axios.delete(`http://localhost:4000/api/follows/removefollow/${followingId}/${followerId}`)
 
@@ -130,7 +130,7 @@ const Profile = () => {
                             </>
                             ) : (
                                 isFollowing ? ( 
-                                <div className='unfollow-btn-container'><button className='unfollow-btn' onClick={() => removeFollow(profileData.id, loggedInUser.id)}>Unfollow</button></div>
+                                <div className='unfollow-btn-container'><button className='unfollow-btn' onClick={() => handleRemoveFollow(profileData.id, loggedInUser.id)}>Unfollow</button></div>
                                 ) : (
                                     <div className='follow-btn-container'><button className='follow-btn' onClick={handleFollow}>Follow</button></div>
                                 )
@@ -156,11 +156,11 @@ const Profile = () => {
             )}
             
             {followersModalStatus && (
-                <UsersModal onClose={closeFollowersModal} type='Followers' usersArray={profileData.followers} removeFollow={removeFollow}/>
+                <UsersModal onClose={closeFollowersModal} type='Followers' usersArray={profileData.followers} handleRemoveFollow={handleRemoveFollow}/>
             )}
 
             {followingModalStatus && (
-                <UsersModal onClose={closeFollowingModal} type='Following' usersArray={profileData.following} removeFollow={removeFollow}/>
+                <UsersModal onClose={closeFollowingModal} type='Following' usersArray={profileData.following} handleRemoveFollow={handleRemoveFollow}/>
             )}
 
         </div>

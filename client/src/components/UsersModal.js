@@ -6,21 +6,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons'; // Import the "times" icon
 import { UserContext } from "../contexts/UserContext";
 
-const UsersModal = ({onClose, type, usersArray, removeFollow }) => {
+const UsersModal = ({onClose, type, usersArray, handleRemoveFollow }) => {
 
     const {loggedInUser, setLoggedInUser} = useContext(UserContext)
     const {username} = useParams();
-
-/*   
-    async function removeFollow(followingId, followerId) {
-        try {
-            const response = await axios.delete(`http://localhost:4000/api/follows/removefollow/${followingId}/${followerId}`)
-        } catch (error) {
-            console.log('Error removing follower')
-        }
-
-    }
-*/
         
     return (
         <div className='modal-overlay'>
@@ -66,8 +55,8 @@ const UsersModal = ({onClose, type, usersArray, removeFollow }) => {
                                          className='modal-remove-btn' 
                                          onClick={() => 
                                          type==='Followers'
-                                         ? removeFollow(loggedInUser.id, profile.id)
-                                         : removeFollow(profile.id, loggedInUser.id)
+                                         ? handleRemoveFollow(loggedInUser.id, profile.id)
+                                         : handleRemoveFollow(profile.id, loggedInUser.id)
                                             
                                          }     
                                          >Remove
