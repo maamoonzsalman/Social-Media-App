@@ -60,4 +60,23 @@ followsRouter.delete('/removefollow/:followingId/:followerId', async (req, res) 
 
 })
 
+followsRouter.get('/:userId/followers', async (req, res) => {
+    try {
+        const userId = parseInt(req.params)
+
+        const followers = await prisma.follows.findMany({
+            where: {
+                followingId: userId,
+            },
+            include: {
+                follower: true,
+            },
+        });
+        console.log('Success retrieving followers list')
+        return res.json(followers)
+    } catch (error) {
+        console.log('error retrieving followers list')
+    }
+});
+
 module.exports = followsRouter;

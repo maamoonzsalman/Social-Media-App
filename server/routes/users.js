@@ -16,7 +16,34 @@ usersRouter.get('/loggedinuser', async (req, res) => {
             const userProfile = await prisma.user.findUnique({
                 where: {
                     username: username.toLowerCase()
-                }
+                },
+                select: {
+                    id: true,
+                    createdAt: true,
+                    username: true,
+                    firstName: true,
+                    lastName: true,
+                    profilePic: true,
+                    bio: true,
+                    posts: {
+                        include: {
+                            comments: true,
+                            likes: true,
+                        },
+                },
+                followers: {
+                include: {
+                    follower: true, // Includes follower details for each follower
+                },
+                },
+                following: {
+                include: {
+                    following: true, // Includes following details for each followed user
+                },
+                },
+                comments: true, // Includes all comments made by the user
+                likes: true, // Includes all likes made by the user
+            },
             })
             res.json({userProfile: userProfile})
         } else {

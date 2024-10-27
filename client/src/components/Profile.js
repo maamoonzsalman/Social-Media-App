@@ -18,6 +18,7 @@ const Profile = () => {
 
     const [followersModalStatus, setFollowersModalStatus] = useState(false)
     const [followingModalStatus, setFollowingModalStatus] = useState(false)
+    const [isFollowing, setIsFollowing] = useState(null)
     const {loggedInUser, setLoggedInUser} = useContext(UserContext)
 
     const {username} = useParams();
@@ -36,6 +37,29 @@ const Profile = () => {
         fetchUserProfile()
 
     }, [username])
+
+    useEffect(() => {
+        const getFollowingStatus = async () => {    
+            if (username !== loggedInUser.username) {
+                try {
+                    console.log('profile id: ', profileData.id)
+                    console.log('loggedin id: ', loggedInUser.id)
+                    console.log('loggedin following who? ', loggedInUser.following)
+                    for (let i = 0; i < loggedInUser.following.length; i++) {
+                        if (loggedInUser.following[i].followingId === profileData.id) {
+                            setIsFollowing(true)
+                            return;
+                        } 
+                    }
+                    setIsFollowing(false);
+                } catch (error) {
+                    console.log('Error fetching following status')
+                }
+            }
+        }
+
+        getFollowingStatus()
+    }, [profileData, loggedInUser])
 
     const handleFollow = async () => {
         try {
@@ -93,7 +117,11 @@ const Profile = () => {
                             <div className='settings-btn-container'><button className='settings-btn'>Settings</button></div>
                             </>
                             ) : (
-                                <div className='follow-btn-container'><button className='follow-btn' onClick={handleFollow}>Follow</button></div>
+                                isFollowing ? ( 
+                                <div className='unfollow-btn-container'><button className='unfollow-btn' onClick={() => removeFollow(profileData.id, loggedInUser.id)}>Unfollow</button></div>
+                                ) : (
+                                    <div className='follow-btn-container'><button className='follow-btn' onClick={handleFollow}>Follow</button></div>
+                                )
                             )}
                         </div>
                         <div className='user-info-middle'>
