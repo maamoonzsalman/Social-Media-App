@@ -66,10 +66,6 @@ const Profile = () => {
             const response = await axios.post(`http://localhost:4000/api/follows/addfollow/${profileData.id}/${loggedInUser.id}`)
             setIsFollowing(true);
             
-            setProfileData(prevData => ({
-            ...prevData,
-            followers: [...prevData.followers, { id: loggedInUser.id, username: loggedInUser.username, profilePic: loggedInUser.profilePic }], // Add new follower
-            }));
         } catch (error) {
             console.log('error following user: ', error)
         }
@@ -81,10 +77,6 @@ const Profile = () => {
             const response = await axios.delete(`http://localhost:4000/api/follows/removefollow/${followingId}/${followerId}`)
 
             setIsFollowing(false);
-            setProfileData(prevData => ({
-                ...prevData,
-                followers: prevData.followers.filter(follower => follower.id !== loggedInUser.id) // Remove the follower from the list
-            }));
         } catch (error) {
             console.log('Error removing follower')
         }
