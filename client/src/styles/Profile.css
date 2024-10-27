@@ -62,7 +62,7 @@
 }
 
 .edit-profile-btn:hover, .settings-btn:hover, .follow-btn:hover, .unfollow-btn:hover {
-    background-color: #2F4F4F;
+    background-color: #505050;;
     cursor: pointer;
 }
 

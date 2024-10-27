@@ -6,6 +6,7 @@ import Login from './components/Login'
 import Sidebar from './components/Sidebar';
 import Profile from './components/Profile';
 import UsersModal from './components/UsersModal';
+import Search from './components/Search';
 
 import { UserProvider } from './contexts/UserContext';
 
@@ -19,7 +20,7 @@ function App() {
             <Route path='/login' element ={<Login />} />
             <Route path='/' element ={<Sidebar />} />
             <Route path='/:username' element={<Profile />} />
-            <Route path='/users/search' element={<UsersModal/>} />
+            <Route path='/users/search' element={<Search/>} />
           </Routes>
         </div>
       </Router>
