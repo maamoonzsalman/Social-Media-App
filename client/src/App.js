@@ -7,6 +7,7 @@ import Sidebar from './components/Sidebar';
 import Profile from './components/Profile';
 import UsersModal from './components/UsersModal';
 import Search from './components/Search';
+import EditProfile from './components/EditProfile';
 
 import { UserProvider } from './contexts/UserContext';
 
@@ -21,6 +22,7 @@ function App() {
             <Route path='/' element ={<Sidebar />} />
             <Route path='/:username' element={<Profile />} />
             <Route path='/users/search' element={<Search/>} />
+            <Route path='/users/:username/editprofile' element={<EditProfile />} />
           </Routes>
         </div>
       </Router>

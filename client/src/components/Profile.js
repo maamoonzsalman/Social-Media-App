@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from "react";
-import Link, {useNavigate, useParams} from 'react-router-dom';
+import {useNavigate, useParams, Link} from 'react-router-dom';
 import axios from 'axios';
 import { UserContext } from "../contexts/UserContext";
 import Sidebar from "./Sidebar";
@@ -117,7 +117,7 @@ const Profile = () => {
                             <div className='username'>{username}</div>
                             {username === loggedInUser.username ? (
                             <>
-                            <div className='edit-profile-btn-container'><button className='edit-profile-btn'>Edit Profile</button></div>
+                            <div className='edit-profile-btn-container'><Link to={`/users/${loggedInUser.username}/editprofile`}><button className='edit-profile-btn'>Edit Profile</button></Link></div>
                             <div className='settings-btn-container'><button className='settings-btn'>Settings</button></div>
                             </>
                             ) : (
@@ -134,7 +134,7 @@ const Profile = () => {
                             <div className='user-metric following-count' onClick={openFollowingModal}>{profileData.following.length} following</div>
                         </div>
                         <div className='user-info-botom'>
-                            <div className='user-bio'>Bio: {profileData.bio}</div>
+                            <div className='user-bio'>{profileData.bio}</div>
                         </div>
                     </div>
                 </div>

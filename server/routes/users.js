@@ -2,6 +2,8 @@ const express = require('express');
 const usersRouter = express.Router();
 const bcrypt = require('bcrypt');
 const prisma = require('../prisma/prismaClient');
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
 
 usersRouter.get('/', async (req, res) => {
     res.json('users')
@@ -148,6 +150,30 @@ usersRouter.post('/', async (req, res) => {
     }
 
     
+})
+
+usersRouter.put('/:username/editprofile', upload.single('profilePic'), async (req, res) => {
+    try {
+        const currentUser = await prisma.user.findUnique({
+            where: { username: req.body.username },
+        });
+
+        const imagePath = req.file ? `/uploads/${req.file.filename}` : currentUser.profilePic;
+        const bio = req.body.bio
+        
+        const updatedUser = await prisma.user.update({
+            where: {username: req.body.username},
+            data: {
+                bio: bio,
+                profilePic: imagePath
+            }
+        })
+
+        return res.json({redirectTo: `/${req.body.username}`})
+        
+    } catch (error) {
+        console.log('Error updating user profile: ', error)
+    }
 })
 
 module.exports = usersRouter;
