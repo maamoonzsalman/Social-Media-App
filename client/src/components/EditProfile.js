@@ -18,6 +18,8 @@ const EditProfile = () => {
     
    
     const navigate = useNavigate();
+    const [fileName, setFileName] = useState('Choose file');
+
 
     useEffect(() => {
         if (loggedInUser) {
@@ -57,15 +59,16 @@ const EditProfile = () => {
 
    const handleImageChange = (e) => {
         const file = e.target.files[0]
+        setFileName(file ? file.name : "Choose file");
         setProfileData({ ...profileData, profilePic: file});
    }
 
     return (
         <div className='edit-profile-page'>
             <Sidebar/>
-            <>
+            <div className='edit-profile-form-container'>
               {loggedInUser && username === loggedInUser.username ? (
-                <form onSubmit={handleSaveProfile}>
+                <form className='edit-profile-form' onSubmit={handleSaveProfile}>
                     <div className='bio-container'>
                         <label className='label-bio'>Bio:</label>
                         <textarea
@@ -80,24 +83,27 @@ const EditProfile = () => {
 
                     <div className='profile-pic-container'>
                         <label className='label-profile-pic'>Upload Profile Picture:</label>
-                        <input
-                        type='file'
-                        className='input-profile-pic'
-                        name='profilePic'
-                        accept='image/*'
-                        onChange={handleImageChange}
-                        >
-                        </input>
+                        <label className="custom-file-label">
+                                {fileName}
+                                <input
+                                    type="file"
+                                    className="input-profile-pic"
+                                    name="profilePic"
+                                    accept="image/*"
+                                    onChange={handleImageChange}
+                                    style={{ display: "none" }} // Hide the original file input
+                                />
+                            </label>
                     </div>
 
                     <div className='submit-container'>
-                        <button type='submit'>Update Profile</button>
+                        <button type='submit' className='submit-edit-profile'>Update Profile</button>
                     </div>
                 </form>
               ) : (
                 <div className='edit-profile-unauthorized'>You are unauthorized</div>
               )}
-            </>
+            </div>
         </div>
       );
 }
