@@ -118,7 +118,7 @@ const Profile = () => {
                             {username === loggedInUser.username ? (
                             <>
                             <div className='edit-profile-btn-container'><Link to={`/users/${loggedInUser.username}/editprofile`}><button className='edit-profile-btn'>Edit Profile</button></Link></div>
-                            <div className='settings-btn-container'><button className='settings-btn'>Settings</button></div>
+                           <Link to={`/${loggedInUser.username}/settings`}><div className='settings-btn-container'><button className='settings-btn'>Settings</button></div> </Link>
                             </>
                             ) : (
                                 isFollowing ? ( 

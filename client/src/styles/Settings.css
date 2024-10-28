@@ -1,0 +1,27 @@
+.settings-page {
+    display: flex;
+}
+
+.settings-form-container {
+    display: flex;
+    width: 100vw;
+    background-color: black;
+}
+
+.delete-account-btn-container {
+    margin: 100px
+}
+
+.delete-account-btn {
+    border-radius: 5px;
+    background-color: red;
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 20px;
+    padding: 3px;
+}
+
+.delete-account-btn:hover {
+    background-color: darkred;
+    cursor: pointer;
+}

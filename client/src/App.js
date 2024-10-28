@@ -8,6 +8,7 @@ import Profile from './components/Profile';
 import UsersModal from './components/UsersModal';
 import Search from './components/Search';
 import EditProfile from './components/EditProfile';
+import Settings from './components/Settings';
 
 import { UserProvider } from './contexts/UserContext';
 
@@ -23,6 +24,7 @@ function App() {
             <Route path='/:username' element={<Profile />} />
             <Route path='/users/search' element={<Search/>} />
             <Route path='/users/:username/editprofile' element={<EditProfile />} />
+            <Route path='/:username/settings' element={<Settings />} />
           </Routes>
         </div>
       </Router>

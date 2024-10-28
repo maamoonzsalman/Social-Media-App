@@ -206,4 +206,23 @@ usersRouter.put('/:username/editprofile', upload.single('profilePic'), async (re
     }
 })
 
+usersRouter.delete('/:userId/delete', async (req, res) => {
+    try {
+        const userId = parseInt(req.params.userId)
+        const deletedUser = await prisma.user.delete({
+            where: {id: userId}
+        })
+        req.logout((err) => {
+            if (err) {
+              console.error(err);
+              return res.status(500).json({ message: 'Error logging out after account deletion' });
+            }
+            return res.status(200).json({ message: 'Account deleted successfully', redirectTo: '/register' });
+          });
+      
+    } catch (error) {
+        console.log('error deleting account: ', error)
+    }
+})
+
 module.exports = usersRouter;
