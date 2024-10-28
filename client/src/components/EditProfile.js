@@ -34,12 +34,13 @@ const EditProfile = () => {
     const handleSaveProfile = async (e) => {
         e.preventDefault();
 
+        console.log('bio: ', profileData.bio)
         try {
             const formData = new FormData();
             formData.append('bio', profileData.bio)
             formData.append('profilePic', profileData.profilePic)
             formData.append('username', loggedInUser.username)
-
+            console.log('formData: ', formData)
             const response = await axios.put(`http://localhost:4000/api/users/${username}/editprofile`, formData, {withCredentials: true, headers: {
             'Content-Type': 'multipart/form-data',
                 }, 
