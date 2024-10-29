@@ -1,9 +1,15 @@
 .post-page {
     display: flex;
+    background-color: black;
 }
 
 .post-container {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 25px;
+    color: white;
+    border-style: solid;
+    border-width: 2px;
+    padding: 7px;
 }
 
 .post-author, .post-author-data-container {
@@ -11,8 +17,17 @@
     align-items: center;
 }
 
+.post-author-link {
+    color: white;
+    text-decoration: none;
+}
+
 .post-author-data-container {
     margin-right: 240px;
+}
+
+.post-author-profilepic-container {
+    margin-right: 4px;
 }
 
 .post-author-profilepic {
@@ -20,6 +35,24 @@
     height: 50px;
     border-radius: 50%;
     object-fit: cover;
+}
+
+.post-author-username {
+    font-weight: bold;
+}
+
+.delete-post-btn {
+    border-radius: 5px;
+    background-color: red;
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 3px;
+    font-weight: bold;
+}
+
+.delete-post-btn:hover {
+    background-color: darkred;
+    cursor: pointer;
 }
 
 .post-image {
@@ -37,9 +70,18 @@
     margin-right: 200px;
 }
 
+.post-caption {
+    font-weight: bold;
+}
+
 .post-likes-container {
     display: flex;
 }
+
+.post-like-count {
+    font-weight: bold;
+}
+
 
 .post-heart-container:hover {
     cursor: pointer;
@@ -83,9 +125,9 @@
   .comments-container {
     border-color: black;
     border-style: solid;
-    height: 350px;
+    height: 325px;
     width: 400px;
-    max-height: 350px;
+    max-height: 325px;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
@@ -101,7 +143,7 @@
 
 .comment-author-link {
     text-decoration: none;
-    color: black;
+    color: white;
 }
   .comment-text-container {
     max-width: 250px; 
@@ -120,6 +162,19 @@
     margin-left: auto; /* This will push the delete button to the far right */
 }
 
+.comment-delete-btn {
+    border-radius: 5px;
+    background-color: red;
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 3px;
+    font-weight: bold;
+}
+
+.comment-delete-btn:hover {
+    background-color: darkred;
+    cursor: pointer;
+}
 
   .add-comment-container {
     display: flex;
@@ -133,12 +188,39 @@
     width: 100%;
   }
 
+  .comment-text-area {
+    background-color: black;
+    color: white;
+    border: white;
+    border-style: solid;
+    border-width: 1px;
+  }
 
+  .comment-text-area:hover {
+    background-color: #555;
+  }
 
+  .comment-text-area::placeholder {
+    color:white;
+  }
 
   .comment-profilepic {
     height: 50px;
     width: 50px;
     object-fit: cover;
     border-radius: 50%;
+  }
+
+  .post-comment-btn {
+    background-color: black;
+    color: white;
+    font-weight: bold;
+    border: white;
+    border-style: solid;
+    border-width: 1px;
+  }
+
+  .post-comment-btn:hover {
+    background-color: #555;
+    cursor: pointer;
   }

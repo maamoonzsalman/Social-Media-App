@@ -7,8 +7,6 @@ import 'boxicons'
 import { UserContext } from "../contexts/UserContext";
 
 const Post = ({Post}) => {
-    const postId = useParams().postId;
-    const username = useParams().username
     const {loggedInUser, setLoggedInUser} = useContext(UserContext);
     const [postData, setPostData] = useState(null)
     const [likedPost, setLikedPost] = useState(null)
@@ -26,6 +24,7 @@ const Post = ({Post}) => {
         }
     }, [loggedInUser]);
     
+    const postId = useParams().postId;
     useEffect(() => {
         const fetchPost = async () => {
             try {
@@ -42,7 +41,6 @@ const Post = ({Post}) => {
 
     useEffect(() => {
         const getLikedStatus = async () => {    
-            console.log('hey')
             try {
                 for (let i = 0; i < postData.likes.length; i++) {
                     if (postData.likes[i].userId === loggedInUser.id) {
@@ -83,7 +81,6 @@ const Post = ({Post}) => {
 
     const handlePostComment = async (e) => {
         e.preventDefault();
-        console.log('new',newCommentData)
         try {
             const response = await axios.post(`http://localhost:4000/api/comments/${postData.id}`, {withCredentials: true, commentData: newCommentData})
             console.log(response.data.comment)
@@ -114,18 +111,20 @@ const Post = ({Post}) => {
             {postData ? (
             <div className='post-container'>
                 <div className='post-author'>
-                    <div className='post-author-data-container'>
-                        <div className='post-author-profilepic-container'>
-                            <img
-                            src={postData.user.profilePic}
-                            className='post-author-profilepic'
-                            >    
-                            </img>
+                    <Link to={`/${postData.user.username}`} className='post-author-link'>
+                        <div className='post-author-data-container'>
+                            <div className='post-author-profilepic-container'>
+                                <img
+                                src={postData.user.profilePic}
+                                className='post-author-profilepic'
+                                >    
+                                </img>
+                            </div>
+                            <div className='post-author-username'>
+                                {postData.user.username}
+                            </div>
                         </div>
-                        <div className='post-author-username'>
-                            {postData.user.username}
-                        </div>
-                    </div>
+                    </Link>
                     {(loggedInUser.username === postData.user.username) && (
                         <div>
                             <button className='delete-post-btn' onClick={handleDeletePost}>Delete Post</button>
@@ -141,14 +140,16 @@ const Post = ({Post}) => {
                 </div>
                 <div className='post-info'>
                     <div className='post-caption-container'>
-                        {postData.caption}
+                        <div className='post-caption'>
+                            {postData.caption}
+                        </div>
                     </div>
                     <div className='post-likes-container'>
                         <div className='post-heart-container'>
                             {(likedPost === true) ? (    
-                                <box-icon name='heart' type='solid' onClick={handleUnlike} ></box-icon>
+                                <box-icon name='heart' type='solid' color='white' onClick={handleUnlike} ></box-icon>
                             ) : (
-                                <box-icon name='heart' onClick={handleLike}></box-icon>
+                                <box-icon name='heart' onClick={handleLike} color='white'></box-icon>
                             )}
                         </div>
                         <div className='post-like-count'>
@@ -185,7 +186,7 @@ const Post = ({Post}) => {
                                     
                                         <div className='comment-delete-btn-container'>
                                         {(loggedInUser.username === postData.user.username || loggedInUser.username === comment.user.username) && (    
-                                            <button onClick={() => handleDeleteComment(comment.id)}>Delete</button>
+                                            <button onClick={() => handleDeleteComment(comment.id)} className='comment-delete-btn'>Delete</button>
                                         )}
                                         </div>
                                     </div>
@@ -204,7 +205,7 @@ const Post = ({Post}) => {
                                 className='comment-text-area'
                                 >
                                 </textarea>
-                                <button type='submit'>Post</button>
+                                <button type='submit' className='post-comment-btn'>Post Comment</button>
                             </form>
                     </div>
                 </div>
