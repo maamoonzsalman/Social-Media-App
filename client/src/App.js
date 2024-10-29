@@ -10,6 +10,7 @@ import Search from './components/Search';
 import EditProfile from './components/EditProfile';
 import Settings from './components/Settings';
 import Create from './components/Create';
+import Post from './components/Post';
 
 import { UserProvider } from './contexts/UserContext';
 
@@ -27,6 +28,7 @@ function App() {
             <Route path='/users/:username/editprofile' element={<EditProfile />} />
             <Route path='/:username/settings' element={<Settings />} />
             <Route path='/:username/create' element={<Create />}></Route>
+            <Route path='/:username/:postId' element={<Post />}></Route>
           </Routes>
         </div>
       </Router>

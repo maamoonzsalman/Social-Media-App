@@ -8,7 +8,7 @@ import { UserContext } from "../contexts/UserContext";
 const Create = () => {
     const {loggedInUser, setLoggedInUser} = useContext(UserContext)
     const username = useParams().username;
-    const [postData, setProfileData] = useState({
+    const [postData, setPostData] = useState({
         caption: '',
         image: ''
       });
@@ -43,13 +43,13 @@ const Create = () => {
 
    const handleCaptionChange = (e) => {
         const { name, value } = e.target;
-        setProfileData({ ...postData, [name]: value });
+        setPostData({ ...postData, [name]: value });
    }
 
    const handleImageChange = (e) => {
         const file = e.target.files[0]
         setFileName(file ? file.name : "Choose file");
-        setProfileData({ ...postData, image: file});
+        setPostData({ ...postData, image: file});
    }
 
     return (

@@ -1,0 +1,38 @@
+.post-page {
+    display: flex;
+}
+
+.post-author {
+    display: flex;
+    align-items: center;
+}
+
+.post-author-profilepic {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.post-image {
+    width: 500px;
+    height: 500px;
+    object-fit: cover;
+}
+
+.post-info {
+    display: flex;
+    justify-content: center;
+}
+
+.post-caption-container {
+    margin-right: 300px;
+}
+
+.post-likes-container {
+    display: flex;
+}
+
+.post-heart-container:hover {
+    cursor: pointer;
+}
