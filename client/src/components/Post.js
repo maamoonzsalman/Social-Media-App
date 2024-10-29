@@ -91,7 +91,22 @@ const Post = ({Post}) => {
             console.log('Error posting comment: ', error)
         }
     }
-    
+
+    const handleDeleteComment = async (commentId) => {
+        try {
+            const response = await axios.delete(`http://localhost:4000/api/comments/${commentId}`, {withCredentials: true})
+        } catch (error) {
+            console.log('Error deleting comment: ', error)
+        }
+    }
+
+    const handleDeletePost = async () => {
+        try {
+            const response = await axios.delete(`http://localhost:4000/api/posts/${postData.id}`, {withCredentials: true})
+        } catch(error) {
+            console.log('Error deleting post ' , error)
+        }
+    }    
 
     return (
         <div className='post-page'>
@@ -99,16 +114,23 @@ const Post = ({Post}) => {
             {postData ? (
             <div className='post-container'>
                 <div className='post-author'>
-                    <div className='post-author-profilepic-container'>
-                        <img
-                        src={postData.user.profilePic}
-                        className='post-author-profilepic'
-                        >    
-                        </img>
+                    <div className='post-author-data-container'>
+                        <div className='post-author-profilepic-container'>
+                            <img
+                            src={postData.user.profilePic}
+                            className='post-author-profilepic'
+                            >    
+                            </img>
+                        </div>
+                        <div className='post-author-username'>
+                            {postData.user.username}
+                        </div>
                     </div>
-                    <div className='post-author-username'>
-                        {postData.user.username}
-                    </div>
+                    {(loggedInUser.username === postData.user.username) && (
+                        <div>
+                            <button className='delete-post-btn' onClick={handleDeletePost}>Delete Post</button>
+                        </div>
+                    )}
                 </div>
                 <div className='post-image-container'>
                     <img
@@ -143,21 +165,28 @@ const Post = ({Post}) => {
                             {postData.comments.map((comment) => {
                                 return (
                                     <div className='comment-container'>
-                                        <div className='comment-username-container'> 
-                                            {comment.user.username}
-                                        </div>
-                                        <div className='comment-profilepic-container'> 
-                                            <img
-                                                src={comment.user.profilePic}
-                                                className='comment-profilepic'
-                                            >
-                                            </img>
-                                        </div>
+                                        <Link to={`/${comment.user.username}`} className='comment-author-link'>
+                                            <div className='comment-author-container'>
+                                                <div className='comment-username-container'> 
+                                                    {comment.user.username}
+                                                </div>
+                                                <div className='comment-profilepic-container'> 
+                                                    <img
+                                                        src={comment.user.profilePic}
+                                                        className='comment-profilepic'
+                                                    >
+                                                    </img>
+                                                </div>
+                                            </div>
+                                        </Link>
                                         <div className='comment-text-container'> 
                                             {comment.text}
                                         </div>
-                                        <div className='comment-delete-btn-container'> 
-                                            <button>Delete</button>
+                                    
+                                        <div className='comment-delete-btn-container'>
+                                        {(loggedInUser.username === postData.user.username || loggedInUser.username === comment.user.username) && (    
+                                            <button onClick={() => handleDeleteComment(comment.id)}>Delete</button>
+                                        )}
                                         </div>
                                     </div>
                                 )

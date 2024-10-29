@@ -25,6 +25,22 @@ postsRouter.post('/:userId/uploadpost', upload.single('image'), async (req, res)
     }
 })
 
+postsRouter.delete('/:postId', async (req, res) => {
+    try {
+        const postId = parseInt(req.params.postId)
+        const deletePost = await prisma.post.delete({
+            where: {
+                id: postId
+            }
+        })
+        console.log('success deleting post!')
+        res.json({deletedPost: deletePost})
+    } catch (error) {
+        console.log('error deleting post: ', error)
+    }
+})
+
+
 postsRouter.post('/:postId/:userId/likepost', async (req, res) => {
     try {
         const postId = parseInt(req.params.postId)

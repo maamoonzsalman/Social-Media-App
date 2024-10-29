@@ -6,9 +6,13 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.post-author {
+.post-author, .post-author-data-container {
     display: flex;
     align-items: center;
+}
+
+.post-author-data-container {
+    margin-right: 240px;
 }
 
 .post-author-profilepic {
@@ -91,6 +95,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 10px;;
+    margin-left: 5px;
+}
+
+.comment-author-link {
+    text-decoration: none;
+    color: black;
 }
   .comment-text-container {
     max-width: 250px; 

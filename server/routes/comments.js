@@ -27,4 +27,18 @@ commentsRouter.post('/:postId', async (req, res) => {
     }
 })
 
+commentsRouter.delete('/:commentId', async (req, res) => {
+    try {
+        const commentId = parseInt(req.params.commentId)
+        const deleteComment = await prisma.comment.delete({
+            where: {
+                id: commentId
+            }
+        })
+        console.log('Successfully deleted comment ', deleteComment)
+    } catch(error) {
+        console.log('Error posting comment: ', error)
+    }
+})
+
 module.exports = commentsRouter
