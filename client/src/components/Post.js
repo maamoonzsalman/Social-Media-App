@@ -12,6 +12,19 @@ const Post = ({Post}) => {
     const {loggedInUser, setLoggedInUser} = useContext(UserContext);
     const [postData, setPostData] = useState(null)
     const [likedPost, setLikedPost] = useState(null)
+    const [newCommentData, setNewCommentData] = useState({
+        text: '',
+        userId: loggedInUser.id
+    })
+
+    useEffect(() => {
+        if (loggedInUser) {
+            setNewCommentData((prevData) => ({
+                ...prevData,
+                userId: loggedInUser.id
+            }));
+        }
+    }, [loggedInUser]);
     
     useEffect(() => {
         const fetchPost = async () => {
@@ -33,12 +46,10 @@ const Post = ({Post}) => {
             try {
                 for (let i = 0; i < postData.likes.length; i++) {
                     if (postData.likes[i].userId === loggedInUser.id) {
-                        console.log('post is liked')
                         setLikedPost(true)
                         return;
                     } 
                 }
-                console.log('not liked')
                 setLikedPost(false);
             } catch (error) {
                 console.log('Error fetching following status')
@@ -65,7 +76,21 @@ const Post = ({Post}) => {
         }
     }
 
+    const handleCommentChange = (e) => {
+        const { name, value } = e.target;
+        setNewCommentData({ ...newCommentData, [name]: value });
+    }
 
+    const handlePostComment = async (e) => {
+        e.preventDefault();
+        console.log('new',newCommentData)
+        try {
+            const response = await axios.post(`http://localhost:4000/api/comments/${postData.id}`, {withCredentials: true, commentData: newCommentData})
+        } catch (error) {
+            console.log('Error posting comment: ', error)
+        }
+    }
+    
 
     return (
         <div className='post-page'>
@@ -108,8 +133,46 @@ const Post = ({Post}) => {
                         </div>                        
                     </div>
                 </div>
-                <div className='post-comments'>
-                    Comments
+                <div className='post-comments-container'>
+                    <div className='comments-title'> 
+                            Comments
+                    </div>
+                    <div className='comments-container'>
+                            
+                            {postData.comments.map((comment) => {
+                                return (
+                                    <div>
+                                        <div> 
+                                            {comment.text}
+                                        </div>
+                                        <div> 
+
+                                        </div>
+                                        <div> 
+
+                                        </div>
+                                        <div> 
+
+                                        </div>
+                                    </div>
+                                )
+                            })}
+
+                    </div>
+                    <div className='add-comment-container'>
+                            <form className='add-comment-form' onSubmit={handlePostComment}>
+                                <textarea
+                                placeholder='Add a comment...'
+                                type='text'
+                                value={newCommentData.text}
+                                onChange={handleCommentChange}
+                                name='text'
+                                className='comment-text-area'
+                                >
+                                </textarea>
+                                <button type='submit'>Post</button>
+                            </form>
+                    </div>
                 </div>
 
             </div>

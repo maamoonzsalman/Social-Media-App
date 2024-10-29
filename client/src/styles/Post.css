@@ -2,21 +2,25 @@
     display: flex;
 }
 
+.post-container {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 .post-author {
     display: flex;
     align-items: center;
 }
 
 .post-author-profilepic {
-    width: 75px;
-    height: 75px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     object-fit: cover;
 }
 
 .post-image {
-    width: 500px;
-    height: 500px;
+    width: 400px;
+    height: 400px;
     object-fit: cover;
 }
 
@@ -26,7 +30,7 @@
 }
 
 .post-caption-container {
-    margin-right: 300px;
+    margin-right: 200px;
 }
 
 .post-likes-container {
@@ -36,3 +40,55 @@
 .post-heart-container:hover {
     cursor: pointer;
 }
+
+.post-comments-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.comments-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.comments-container {
+    border-color: black;
+    border-style: solid;
+    height: 350px;
+    width: 400px;
+    max-height: 350px;
+    overflow-y: auto;
+}
+
+.comments-container::-webkit-scrollbar {
+    width: 8px; 
+  }
+  
+  .comments-container::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+    border-radius: 10px;
+  }
+  
+  .comments-container::-webkit-scrollbar-thumb {
+    background: #888; 
+    border-radius: 10px; 
+  }
+
+  .comments-container::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+    cursor: pointer;
+  }
+
+  .add-comment-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .add-comment-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
