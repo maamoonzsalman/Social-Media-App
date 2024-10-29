@@ -11,6 +11,7 @@ import EditProfile from './components/EditProfile';
 import Settings from './components/Settings';
 import Create from './components/Create';
 import Post from './components/Post';
+import Feed from './components/Feed';
 
 import { UserProvider } from './contexts/UserContext';
 
@@ -22,7 +23,7 @@ function App() {
           <Routes>
             <Route path='/register' element={<Register />} />
             <Route path='/login' element ={<Login />} />
-            <Route path='/' element ={<Sidebar />} />
+            <Route path='/' element ={<Feed />} />
             <Route path='/:username' element={<Profile />} />
             <Route path='/users/search' element={<Search/>} />
             <Route path='/users/:username/editprofile' element={<EditProfile />} />

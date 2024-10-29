@@ -114,5 +114,43 @@ postsRouter.get('/:postId', async (req, res) => {
     }
 })
 
+postsRouter.get('/following/:userId', async (req,res) => {
+    try {
+        console.log('we are here')
+        const userId = parseInt(req.params.userId)
+        console.log(userId)
+        const followingPosts = await prisma.post.findMany({
+            where: {
+                user: {
+                    followers: {
+                        some: {
+                            followerId: userId
+                        }
+                    }
+                }
+            },
+            include: {
+                user: {
+                    select: {
+                        id: true,
+                        username: true,
+                        profilePic: true
+                    }
+                },
+                comments: true,
+                likes: true
+            },
+            orderBy: {
+                createdAt: 'desc'
+            }
+        });
+        console.log(followingPosts)
+        res.json({posts: followingPosts})
+        
+    } catch(error) {
+        console.log('Error getting posts for user following', error)
+    }
+})
+
 
 module.exports = postsRouter

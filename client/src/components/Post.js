@@ -10,6 +10,7 @@ const Post = ({Post}) => {
     const {loggedInUser, setLoggedInUser} = useContext(UserContext);
     const [postData, setPostData] = useState(null)
     const [likedPost, setLikedPost] = useState(null)
+    const postId = useParams().postId;
     const [newCommentData, setNewCommentData] = useState({
         text: '',
         userId: loggedInUser.id
@@ -24,16 +25,28 @@ const Post = ({Post}) => {
         }
     }, [loggedInUser]);
     
-    const postId = useParams().postId;
     useEffect(() => {
         const fetchPost = async () => {
-            try {
-                const response = await axios.get(`http://localhost:4000/api/posts/${postId}`, {withCredentials: true})
-                const post = response.data.post
-                console.log('post data: ', post)
-                setPostData(post)
-            } catch (error) {   
-                console.log('Error fetching post: ', error)
+            if (typeof postId !== 'undefined') {    
+                try {
+                    const response = await axios.get(`http://localhost:4000/api/posts/${postId}`, {withCredentials: true})
+                    const post = response.data.post
+                    console.log('post data: ', post)
+                    setPostData(post)
+                } catch (error) {   
+                    console.log('Error fetching post: ', error)
+                }
+            } else if (typeof Post !== 'undefined') {
+                try {
+                    const response = await axios.get(`http://localhost:4000/api/posts/${Post.id}`, {withCredentials: true})
+                    const post = response.data.post
+                    console.log('post data for feed: ', post)
+                    setPostData(post)
+                } catch (error) {
+                    console.log('error loading post for feed: ', error)
+                } 
+            } else {
+                console.log('error getting any post')
             }
         }
         fetchPost()
@@ -107,7 +120,8 @@ const Post = ({Post}) => {
 
     return (
         <div className='post-page'>
-            <Sidebar/>
+            
+            {!Post && <Sidebar/>}
             {postData ? (
             <div className='post-container'>
                 <div className='post-author'>
@@ -165,7 +179,7 @@ const Post = ({Post}) => {
                             
                             {postData.comments.map((comment) => {
                                 return (
-                                    <div className='comment-container'>
+                                    <div className='comment-container' key={comment.id}>
                                         <Link to={`/${comment.user.username}`} className='comment-author-link'>
                                             <div className='comment-author-container'>
                                                 <div className='comment-username-container'> 

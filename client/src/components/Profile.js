@@ -137,7 +137,7 @@ const Profile = () => {
                 <div className='profile-posts-container'>
                     {profileData.posts.map((post) => {
                         return (
-                            <Link to={`/${username}/${post.id}`}>
+                            <Link to={`/${username}/${post.id}`} key={post.id}>
                                 <div className='profile-post-container'>
                                     <img
                                     className='profile-post-img'    
