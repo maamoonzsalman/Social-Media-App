@@ -77,7 +77,17 @@ postsRouter.get('/:postId', async (req, res) => {
                 user: true,
                 userId: true,
                 likes: true,
-                comments: true
+                comments: {
+                    include: {
+                        user: {
+                            select: {
+                                id: true,
+                                username: true,
+                                profilePic: true
+                            }
+                        }
+                    }
+                }
             }
         })
         console.log('post retrieved successfully!')

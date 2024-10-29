@@ -53,14 +53,7 @@
     font-weight: bold;
 }
 
-.comments-container {
-    border-color: black;
-    border-style: solid;
-    height: 350px;
-    width: 400px;
-    max-height: 350px;
-    overflow-y: auto;
-}
+
 
 .comments-container::-webkit-scrollbar {
     width: 8px; 
@@ -81,6 +74,42 @@
     cursor: pointer;
   }
 
+  
+
+  .comments-container {
+    border-color: black;
+    border-style: solid;
+    height: 350px;
+    width: 400px;
+    max-height: 350px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.comment-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+  .comment-text-container {
+    max-width: 250px; 
+    white-space: normal; 
+    word-break: break-word; 
+}
+
+.comment-username-container,
+.comment-profilepic-container,
+.comment-text-container {
+    display: flex;
+    align-items: center;
+}
+
+.comment-delete-btn-container {
+    margin-left: auto; /* This will push the delete button to the far right */
+}
+
+
   .add-comment-container {
     display: flex;
     align-items: center;
@@ -91,4 +120,14 @@
     display: flex;
     flex-direction: column;
     width: 100%;
+  }
+
+
+
+
+  .comment-profilepic {
+    height: 50px;
+    width: 50px;
+    object-fit: cover;
+    border-radius: 50%;
   }

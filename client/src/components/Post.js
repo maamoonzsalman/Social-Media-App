@@ -86,6 +86,7 @@ const Post = ({Post}) => {
         console.log('new',newCommentData)
         try {
             const response = await axios.post(`http://localhost:4000/api/comments/${postData.id}`, {withCredentials: true, commentData: newCommentData})
+            console.log(response.data.comment)
         } catch (error) {
             console.log('Error posting comment: ', error)
         }
@@ -141,18 +142,22 @@ const Post = ({Post}) => {
                             
                             {postData.comments.map((comment) => {
                                 return (
-                                    <div>
-                                        <div> 
+                                    <div className='comment-container'>
+                                        <div className='comment-username-container'> 
+                                            {comment.user.username}
+                                        </div>
+                                        <div className='comment-profilepic-container'> 
+                                            <img
+                                                src={comment.user.profilePic}
+                                                className='comment-profilepic'
+                                            >
+                                            </img>
+                                        </div>
+                                        <div className='comment-text-container'> 
                                             {comment.text}
                                         </div>
-                                        <div> 
-
-                                        </div>
-                                        <div> 
-
-                                        </div>
-                                        <div> 
-
+                                        <div className='comment-delete-btn-container'> 
+                                            <button>Delete</button>
                                         </div>
                                     </div>
                                 )
