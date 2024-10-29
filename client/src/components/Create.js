@@ -33,7 +33,7 @@ const Create = () => {
             });
             
 
-            //navigate(response.data.redirectTo)
+            navigate(`/${loggedInUser.username}`)
             
         } catch (error) {
             console.log('error updating profile: ', error )

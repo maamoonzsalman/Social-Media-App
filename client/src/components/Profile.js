@@ -42,9 +42,6 @@ const Profile = () => {
         const getFollowingStatus = async () => {    
             if (username !== loggedInUser.username) {
                 try {
-                    console.log('profile id: ', profileData.id)
-                    console.log('loggedin id: ', loggedInUser.id)
-                    console.log('loggedin following who? ', loggedInUser.following)
                     for (let i = 0; i < loggedInUser.following.length; i++) {
                         if (loggedInUser.following[i].followingId === profileData.id) {
                             setIsFollowing(true)
@@ -75,7 +72,6 @@ const Profile = () => {
     const handleRemoveFollow = async(followingId, followerId) => {
         try {
             const response = await axios.delete(`http://localhost:4000/api/follows/removefollow/${followingId}/${followerId}`)
-
             setIsFollowing(false);
         } catch (error) {
             console.log('Error removing follower')
@@ -138,8 +134,22 @@ const Profile = () => {
                         </div>
                     </div>
                 </div>
-                <div className='posts-container'>
-                    Posts
+                <div className='profile-posts-container'>
+                    {profileData.posts.map((post) => {
+                        return (
+                            <Link to={`/${username}/${post.id}`}>
+                                <div className='profile-post-container'>
+                                    <img
+                                    className='profile-post-img'    
+                                    src={post.image}
+                                    > 
+                                    </img>
+                                </div>
+                            </Link>
+                        )
+                    })}
+
+                    
                 </div>
             </div>
 
