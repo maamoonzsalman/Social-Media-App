@@ -217,6 +217,8 @@ usersRouter.delete('/:userId/delete', async (req, res) => {
               console.error(err);
               return res.status(500).json({ message: 'Error logging out after account deletion' });
             }
+            req.session.destroy(); // Destroy the session completely
+            res.clearCookie('connect.sid');
             return res.status(200).json({ message: 'Account deleted successfully', redirectTo: '/register' });
           });
       

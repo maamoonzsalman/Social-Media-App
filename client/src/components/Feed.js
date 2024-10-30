@@ -12,17 +12,21 @@ const Feed = () => {
     const [followingPosts, setFollowingPosts] = useState(null)
 
    useEffect(() => {
-    const fetchFeedPosts = async () => {
-        try {
-            const response = await axios.get(`http://localhost:4000/api/posts/following/${loggedInUser.id}`)
-            const posts = response.data.posts
-            console.log('posts',posts)
-            setFollowingPosts(posts)
-        } catch (error) {
-            console.log('error fetching posts for feed: ', error)
+    
+    if (loggedInUser && loggedInUser.id) {
+        const fetchFeedPosts = async () => {
+            try {
+                const response = await axios.get(`http://localhost:4000/api/posts/following/${loggedInUser.id}`)
+                const posts = response.data.posts
+                console.log('posts',posts)
+                setFollowingPosts(posts)
+            } catch (error) {
+                console.log('error fetching posts for feed: ', error)
+            }
         }
+        fetchFeedPosts();
     }
-    fetchFeedPosts()
+    
    },[loggedInUser])
 
     return (
